@@ -3,7 +3,7 @@ const nextConfig = {
   experimental: {
     serverActions: {}, // ← kalau kamu pakai "use server"
   },
-  serverExternalPackages: ['argon2'], // ← sekarang pindah ke sini
+  serverExternalPackages: ['bcryptjs'], // ← sekarang pindah ke sini
   output: 'standalone', // ← opsional, untuk vercel deployment
 };
 
