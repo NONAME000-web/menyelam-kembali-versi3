@@ -4,6 +4,7 @@ import { getUserByEmail } from './data/user'
 import { LoginSchema } from './Schemas'
 import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
+import argon2 from 'argon2'
 
 export default {
     providers: [
@@ -25,9 +26,7 @@ export default {
                     
                     if(!user || !user.password) return null
 
-                    const bcrypt = await import("bcryptjs")
-
-                    const passwordMatch = await bcrypt.compare(password, user.password)
+                    const passwordMatch = await argon2.verify(user.password, password)
 
                     if(passwordMatch) return user
                 }

@@ -1,9 +1,9 @@
 "use server"
 import { RegisterSchema } from '@/Schemas';
-import bcrypt from 'bcryptjs';
 import { Database } from '@/lib/db';
 import { getUserByEmail } from '@/data/user';
 import * as z from "zod";
+import argon2 from 'argon2';
 
 export const Register = async(values: z.infer<typeof RegisterSchema>) => {
     const validatedData = RegisterSchema.safeParse(values);
@@ -11,7 +11,7 @@ export const Register = async(values: z.infer<typeof RegisterSchema>) => {
 
     const { email, password, username } = validatedData.data
 
-    const hashedPass = await bcrypt.hash(password, 10);
+    const hashedPass = await argon2.hash(password);
     const userExist = await getUserByEmail(email);
     if(userExist) return {error: "User already exists"}
 
